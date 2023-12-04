@@ -66,7 +66,8 @@ public class PatientServiceImpl implements PatientService {
 
     public Patient getPatientByUserId(Long id)
     {
-        return patientRepository.getPatientByUserId(id);
+        //return patientRepository.getPatientByUserId(id);
+        return null;
     }
     public PatientDetailsDTO getPatientDetailsById(Long id) {
         Patient patient = this.getPatientById(id);

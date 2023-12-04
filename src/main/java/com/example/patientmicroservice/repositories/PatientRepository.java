@@ -15,8 +15,9 @@ public interface PatientRepository extends JpaRepository<Patient, Long>
      List<Patient> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
 
 
+     /*
      @Query("SELECT e FROM Patient e WHERE e.user.id = ?1")
      Patient getPatientByUserId(long id);
-
+*/
 
 }

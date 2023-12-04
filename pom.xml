@@ -14,7 +14,7 @@
 	<name>PatientMicroservice</name>
 	<description>PatientMicroservice</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>18</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,10 +39,12 @@
     </dependencies>
 
 	<build>
+		<finalName>PatientMicroservice</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.1.5</version>
 			</plugin>
 		</plugins>
 	</build>
