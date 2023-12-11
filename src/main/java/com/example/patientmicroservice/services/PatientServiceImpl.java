@@ -33,8 +33,8 @@ public class PatientServiceImpl implements PatientService {
         return patient.orElse(null);
     }
 
-    public Patient createPatient(String firstName, String lastName, int age) {
-        Patient patient = new Patient(firstName, lastName, age);
+    public Patient createPatient(String firstName, String lastName, int age, Long userId) {
+        Patient patient = new Patient(firstName, lastName, age, userId);
         return patientRepository.save(patient);
     }
 
@@ -61,13 +61,9 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.findByFirstNameAndLastName(firstName,lastName);
     }
 
-
-
-
     public Patient getPatientByUserId(Long id)
     {
-        //return patientRepository.getPatientByUserId(id);
-        return null;
+        return patientRepository.getPatientByUserId(id);
     }
     public PatientDetailsDTO getPatientDetailsById(Long id) {
         Patient patient = this.getPatientById(id);

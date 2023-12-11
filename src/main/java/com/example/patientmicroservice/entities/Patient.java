@@ -32,6 +32,9 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<Encounter> encounters = new ArrayList<>();
 
+    @Column(name = "user_id")
+    private Long userId;
+
 
     public Patient(String firstName, String lastName, int age) {
         this.firstName = firstName;
@@ -46,6 +49,13 @@ public class Patient {
         this.age = age;
     }
 
+    public Patient(String firstName, String lastName, int age, Long userId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.userId = userId;
+    }
+
     public Patient(Long id, String firstName, String lastName, int age, List<Condition> conditions, List<Observation> observations, List<Encounter> encounters) {
         this.id = id;
         this.firstName = firstName;
@@ -54,6 +64,17 @@ public class Patient {
         this.conditions = conditions;
         this.observations = observations;
         this.encounters = encounters;
+    }
+
+    public Patient(Long id, String firstName, String lastName, Integer age, List<Condition> conditions, List<Observation> observations, List<Encounter> encounters, Long userId) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.conditions = conditions;
+        this.observations = observations;
+        this.encounters = encounters;
+        this.userId = userId;
     }
 
     public Patient() {
@@ -115,6 +136,12 @@ public class Patient {
         this.encounters = encounters;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }
 

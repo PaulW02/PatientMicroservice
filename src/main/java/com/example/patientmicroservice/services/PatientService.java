@@ -10,7 +10,7 @@ public interface PatientService {
 
     Patient getPatientById(Long id);
 
-    Patient createPatient(String firstName, String lastName, int age);
+    Patient createPatient(String firstName, String lastName, int age, Long userId);
 
     Patient updatePatient(Long id, Patient updatedPatient);
 

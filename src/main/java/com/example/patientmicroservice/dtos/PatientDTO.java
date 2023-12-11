@@ -1,10 +1,13 @@
 package com.example.patientmicroservice.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PatientDTO {
     private Long id;
     private String firstName;
     private String lastName;
     private int age;
+    private Long userId;
 
     public PatientDTO(Long id, String firstName, String lastName, int age) {
         this.id = id;
@@ -13,7 +16,12 @@ public class PatientDTO {
         this.age = age;
     }
 
-
+    public PatientDTO(@JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, @JsonProperty("age") int age, @JsonProperty("userId") Long userId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.userId = userId;
+    }
 
     public Long getId() {
         return id;
@@ -45,5 +53,13 @@ public class PatientDTO {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

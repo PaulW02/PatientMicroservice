@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,14 @@ public class PatientController {
     // Inject your service or repository here
     @Autowired
     private PatientService patientService;
+
+    private final WebClient userClient;
+
+    @Autowired
+    public PatientController(WebClient.Builder webClientBuilder) {
+        this.userClient = webClientBuilder.baseUrl("http://login-microservice-service:5001/user").build();
+    }
+
 
     // Define your REST endpoints
     @GetMapping("/")
@@ -45,9 +54,9 @@ public class PatientController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patient) {
-        Patient createdPatient = patientService.createPatient(patient.getFirstName(), patient.getLastName(), patient.getAge());
+        Patient createdPatient = patientService.createPatient(patient.getFirstName(), patient.getLastName(), patient.getAge(), patient.getUserId());
         PatientDTO createdPatientDTO = new PatientDTO(createdPatient.getId(), createdPatient.getFirstName(), createdPatient.getLastName(), createdPatient.getAge());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPatientDTO);
     }
@@ -65,27 +74,39 @@ public class PatientController {
     @GetMapping("/user/{id}")
     public ResponseEntity<PatientDetailsDTO> getPatientByUserId(@PathVariable Long id)
     {
-       Patient p =  patientService.getPatientByUserId(id);
-        List<Condition> conditions = p.getConditions();
-        List<Observation> observations = p.getObservations();
-        List<Encounter> encounters = p.getEncounters();
-        List<ConditionDTO> conditionDTOs = new ArrayList<>();
-        for (Condition condition : conditions) {
-            conditionDTOs.add(ConditionDTO.fromEntity(condition));
+        Long userExists = userClient.get()
+                .uri("/checkUser/{id}", id)
+                .retrieve()
+                .bodyToMono(Long.class)
+                .block();
+
+        // If the user exists, proceed with fetching messages
+        if (userExists != null && userExists > 0) {
+            Patient p =  patientService.getPatientByUserId(id);
+            List<Condition> conditions = p.getConditions();
+            List<Observation> observations = p.getObservations();
+            List<Encounter> encounters = p.getEncounters();
+            List<ConditionDTO> conditionDTOs = new ArrayList<>();
+            for (Condition condition : conditions) {
+                conditionDTOs.add(ConditionDTO.fromEntity(condition));
+            }
+
+            List<ObservationDTO> observationDTOs = new ArrayList<>();
+            for (Observation observation : observations) {
+                observationDTOs.add(ObservationDTO.fromEntity(observation));
+            }
+
+            List<EncounterDTO> encounterDTOs = new ArrayList<>();
+            for (Encounter encounter : encounters) {
+                encounterDTOs.add(EncounterDTO.fromEntity(encounter));
+            }
+            PatientDetailsDTO patientDetailsDTO = new PatientDetailsDTO(p.getId(), conditionDTOs, observationDTOs, encounterDTOs, p.getFirstName(), p.getLastName(), p.getAge());
+
+            return ResponseEntity.ok(patientDetailsDTO);
+        } else {
+            return ResponseEntity.notFound().build();
         }
 
-        List<ObservationDTO> observationDTOs = new ArrayList<>();
-        for (Observation observation : observations) {
-            observationDTOs.add(ObservationDTO.fromEntity(observation));
-        }
-
-        List<EncounterDTO> encounterDTOs = new ArrayList<>();
-        for (Encounter encounter : encounters) {
-            encounterDTOs.add(EncounterDTO.fromEntity(encounter));
-        }
-       PatientDetailsDTO patientDetailsDTO = new PatientDetailsDTO(p.getId(), conditionDTOs, observationDTOs, encounterDTOs, p.getFirstName(), p.getLastName(), p.getAge());
-
-       return ResponseEntity.ok(patientDetailsDTO);
     }
     @GetMapping("/search")
     public ResponseEntity<List<PatientDTO>> findPatientByFirstNameAndLastName(
