@@ -27,7 +27,7 @@ public class EncounterController {
     @Autowired
     private ObservationService observationService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<EncounterDTO> createEncounter(@RequestBody CreateEncounterDTO createEncounterDTO) {
         Encounter encounter = encounterService.createEncounter(LocalDate.now(), createEncounterDTO.getPatientId());
         EncounterDTO newEncounter = new EncounterDTO(encounter.getId(), encounter.getVisitDate(),new PatientDTO(encounter.getPatient().getId(), encounter.getPatient().getFirstName(), encounter.getPatient().getLastName(), encounter.getPatient().getAge()));

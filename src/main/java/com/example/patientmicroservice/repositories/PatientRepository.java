@@ -17,6 +17,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long>
 
 
      @Query("SELECT e FROM Patient e WHERE e.userId = ?1")
-     Patient getPatientByUserId(long id);
+     Patient getPatientByUserId(String id);
 
 }

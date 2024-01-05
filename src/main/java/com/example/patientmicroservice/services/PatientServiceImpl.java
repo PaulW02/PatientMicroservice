@@ -33,7 +33,7 @@ public class PatientServiceImpl implements PatientService {
         return patient.orElse(null);
     }
 
-    public Patient createPatient(String firstName, String lastName, int age, Long userId) {
+    public Patient createPatient(String firstName, String lastName, int age, String userId) {
         Patient patient = new Patient(firstName, lastName, age, userId);
         return patientRepository.save(patient);
     }
@@ -61,7 +61,7 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.findByFirstNameAndLastName(firstName,lastName);
     }
 
-    public Patient getPatientByUserId(Long id)
+    public Patient getPatientByUserId(String id)
     {
         return patientRepository.getPatientByUserId(id);
     }

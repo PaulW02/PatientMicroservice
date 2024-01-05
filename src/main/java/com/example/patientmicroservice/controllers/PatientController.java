@@ -72,16 +72,16 @@ public class PatientController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<PatientDetailsDTO> getPatientByUserId(@PathVariable Long id)
+    public ResponseEntity<PatientDetailsDTO> getPatientByUserId(@PathVariable String id)
     {
-        Long userExists = userClient.get()
+        String userId = userClient.get()
                 .uri("/checkUser/{id}", id)
                 .retrieve()
-                .bodyToMono(Long.class)
+                .bodyToMono(String.class)
                 .block();
 
         // If the user exists, proceed with fetching messages
-        if (userExists != null && userExists > 0) {
+        if (userId != null && !userId.isEmpty()) {
             Patient p =  patientService.getPatientByUserId(id);
             List<Condition> conditions = p.getConditions();
             List<Observation> observations = p.getObservations();

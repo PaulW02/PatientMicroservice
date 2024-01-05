@@ -33,7 +33,7 @@ public class Patient {
     private List<Encounter> encounters = new ArrayList<>();
 
     @Column(name = "user_id")
-    private Long userId;
+    private String userId;
 
 
     public Patient(String firstName, String lastName, int age) {
@@ -49,7 +49,7 @@ public class Patient {
         this.age = age;
     }
 
-    public Patient(String firstName, String lastName, int age, Long userId) {
+    public Patient(String firstName, String lastName, int age, String userId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -66,7 +66,7 @@ public class Patient {
         this.encounters = encounters;
     }
 
-    public Patient(Long id, String firstName, String lastName, Integer age, List<Condition> conditions, List<Observation> observations, List<Encounter> encounters, Long userId) {
+    public Patient(Long id, String firstName, String lastName, Integer age, List<Condition> conditions, List<Observation> observations, List<Encounter> encounters, String userId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -136,11 +136,11 @@ public class Patient {
         this.encounters = encounters;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 }

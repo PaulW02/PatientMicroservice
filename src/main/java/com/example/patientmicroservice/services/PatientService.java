@@ -10,7 +10,7 @@ public interface PatientService {
 
     Patient getPatientById(Long id);
 
-    Patient createPatient(String firstName, String lastName, int age, Long userId);
+    Patient createPatient(String firstName, String lastName, int age, String userId);
 
     Patient updatePatient(Long id, Patient updatedPatient);
 
@@ -19,7 +19,7 @@ public interface PatientService {
     List<Patient> getPatientByFirstNameAndLastName(String firstName, String lastName);
 
     PatientDetailsDTO getPatientDetailsById(Long id);
-    Patient getPatientByUserId(Long id);
+    Patient getPatientByUserId(String id);
 
 
 

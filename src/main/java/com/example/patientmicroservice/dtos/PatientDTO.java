@@ -7,7 +7,7 @@ public class PatientDTO {
     private String firstName;
     private String lastName;
     private int age;
-    private Long userId;
+    private String userId;
 
     public PatientDTO(Long id, String firstName, String lastName, int age) {
         this.id = id;
@@ -16,7 +16,7 @@ public class PatientDTO {
         this.age = age;
     }
 
-    public PatientDTO(@JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, @JsonProperty("age") int age, @JsonProperty("userId") Long userId) {
+    public PatientDTO(@JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, @JsonProperty("age") int age, @JsonProperty("userId") String userId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -55,11 +55,11 @@ public class PatientDTO {
         this.age = age;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 }
