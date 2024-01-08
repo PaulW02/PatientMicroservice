@@ -28,7 +28,7 @@ public class PatientController {
 
     @Autowired
     public PatientController(WebClient.Builder webClientBuilder) {
-        this.userClient = webClientBuilder.baseUrl("http://login-microservice-service:5001/user").build();
+        this.userClient = webClientBuilder.baseUrl("https://login-microservice.app.cloud.cbh.kth.se/user").build();
     }
 
 
